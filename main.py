@@ -2,7 +2,6 @@ import requests
 import json
 import click
 import typing as t
-import os
 from pathlib import Path
 import sys
 
@@ -36,13 +35,18 @@ def get_keys():
 
     keys: t.Dict[str, str] = {}
     for key_type in KEY_NAMES:
-        value = click.prompt(f"Enter value for {key_type}")
+        value = click.prompt(f"Enter value for {key_type}", hide_input=True)
         keys[key_type] = value
 
-    if click.confirm(f"Do you want to store these keys to {KEYFILE}?", default=True):
+    if click.confirm(
+        "Do you want to store these keys to "
+        f"{KEYFILE.replace(f'{Path.home()}/', '$HOME/')}?",
+        default=True,
+    ):
         Path(CONFIG_DIR).mkdir(parents=True, exist_ok=True)
         with open(KEYFILE, "w") as f:
             json.dump(keys, f, indent=2)
+    exit(0)
 
     return keys[API_KEY], keys[SECRET_KEY]
 
@@ -61,13 +65,13 @@ def request_certs(domain: str, apikey: str, secretkey: str) -> t.Dict[str, str]:
     "--domain",
     "-d",
     help="Domain we are requesting the SSL certs in relation to",
-    required=True
+    required=True,
 )
 @click.option(
     "--location",
     "-l",
     help="Directory to store the downloaded SSL certs",
-    required=True
+    required=True,
 )
 def main(domain: str = "", location: str = "") -> None:
     apikey, secretkey = get_keys()
