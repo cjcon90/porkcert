@@ -12,7 +12,7 @@ if ! docker image inspect "$image" &> /dev/null; then
   echo "Finished building $image"
 fi
 
-cmd="docker run -v $HOME/.config/:/root/.config -v $location:$location -it $image -d $domain -l $location"
+cmd="docker run -v $HOME/.config/:/root/.config --name porkcert-cron -v $location:$location $image -d $domain -l $location"
 
 # Run once
 $cmd
@@ -23,8 +23,8 @@ if ! command -v crontab &> /dev/null; then
   exit 1
 fi
 
-# Update weekly cron schedule
-cronsched="0 0 * * 0"
+# Update daily cron schedule
+cronsched="0 0 * * *"
 
 # Set docker run job as crontab job if doesn't exist
 if (crontab -l 2>/dev/null | grep -q -F "$cmd"); then
