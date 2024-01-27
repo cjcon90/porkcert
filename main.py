@@ -3,6 +3,7 @@ import json
 import click
 import typing as t
 from pathlib import Path
+from typing import Tuple
 import sys
 
 API_KEY: str = "API_KEY"
@@ -21,7 +22,7 @@ CERT_NAME_TO_FILE = {
 }
 
 
-def get_keys():
+def get_keys() -> Tuple[str, str]:
     """
     Check if keys exist at .config/porkcert/keys.json and fetch if so
     Otherwise prompt user to input and save
@@ -46,7 +47,6 @@ def get_keys():
         Path(CONFIG_DIR).mkdir(parents=True, exist_ok=True)
         with open(KEYFILE, "w") as f:
             json.dump(keys, f, indent=2)
-    exit(0)
 
     return keys[API_KEY], keys[SECRET_KEY]
 
