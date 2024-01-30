@@ -12,7 +12,7 @@ if ! docker image inspect "$image" &> /dev/null; then
   echo "Finished building $image"
 fi
 
-cmd="docker run -v $HOME/.config/:/root/.config --name porkcert-cron -v $location:$location $image -d $domain -l $location"
+cmd="docker run -v $HOME/.config/:/root/.config --rm -v $location:$location $image -d $domain -l $location"
 
 # Run once
 $cmd
