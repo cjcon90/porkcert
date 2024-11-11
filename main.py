@@ -16,7 +16,6 @@ SSL_ENDPOINT = "https://porkbun.com/api/json/v3/ssl/retrieve/{}"
 # Keep names in line with standard certbot names
 CERT_NAME_TO_FILE = {
     "certificatechain": "fullchain.pem",
-    "intermediatecertificate": "chain.pem",
     "privatekey": "privkey.pem",
     "publickey": "cert.pem",
 }
