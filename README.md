@@ -18,7 +18,7 @@ Certs are saved in traditional certbot names rather than default Porkbun names
 
 ### Running the python script to manually download and store certs once
 ```
-$ git clone https://github.com/cjcon90/dotfiles.git && cd porkcert
+$ git clone https://github.com/cjcon90/porkcert.git && cd porkcert
 $ python -m venv venv && source venv/bin/activate
 $ pip install -r requirements.txt
 $ python main.py -d {domain_name} -l {directory_to_save_certs}
